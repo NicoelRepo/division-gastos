@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Division de Gastos</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+<main class="shell">
+    <section class="page-heading">
+        <h1>Grupos</h1>
+        <form class="inline-form" method="post" th:action="@{/groups}">
+            <input name="name" placeholder="Nombre del grupo" required>
+            <button type="submit">Crear</button>
+        </form>
+    </section>
+
+    <p class="alert" th:if="${error}" th:text="${error}"></p>
+
+    <section class="empty-state" th:if="${#lists.isEmpty(groups)}">
+        <p>No hay grupos cargados.</p>
+    </section>
+
+    <section class="list" th:if="${!#lists.isEmpty(groups)}">
+        <a class="row-link" th:each="group : ${groups}" th:href="@{/groups/{id}(id=${group.id.value})}">
+            <span th:text="${group.name}">Grupo</span>
+            <small th:text="${#lists.size(group.members)} + ' miembros'">0 miembros</small>
+        </a>
+    </section>
+</main>
+</body>
+</html>

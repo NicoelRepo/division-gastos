@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Settlement</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+<main class="shell">
+    <section class="page-heading">
+        <div>
+            <h1>Settlement</h1>
+            <p th:text="${group.name}">Grupo</p>
+        </div>
+        <a class="button secondary" th:href="@{/groups/{id}(id=${group.id.value})}">Volver</a>
+    </section>
+
+    <p class="empty-state" th:if="${#lists.isEmpty(transfers)}">El grupo ya esta saldado.</p>
+
+    <table th:if="${!#lists.isEmpty(transfers)}">
+        <thead>
+        <tr>
+            <th>Desde</th>
+            <th>Hacia</th>
+            <th>Monto</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="transfer : ${transfers}">
+            <td th:text="${transfer.fromName}">A</td>
+            <td th:text="${transfer.toName}">B</td>
+            <td th:text="${currency} + ' ' + ${transfer.amount}">ARS 0.00</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>
