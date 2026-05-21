@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Settlement</title>
+    <title>Liquidación</title>
     <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 <body>
@@ -11,19 +11,19 @@
 <main class="shell">
     <section class="page-heading">
         <div>
-            <h1>Settlement</h1>
+            <h1>Liquidación</h1>
             <p th:text="${group.name}">Grupo</p>
         </div>
         <a class="button secondary" th:href="@{/groups/{id}(id=${group.id.value})}">Volver</a>
     </section>
 
-    <p class="empty-state" th:if="${#lists.isEmpty(transfers)}">El grupo ya esta saldado.</p>
+    <p class="empty-state" th:if="${#lists.isEmpty(transfers)}">El grupo ya está saldado.</p>
 
     <table th:if="${!#lists.isEmpty(transfers)}">
         <thead>
         <tr>
-            <th>Desde</th>
-            <th>Hacia</th>
+            <th>De</th>
+            <th>Para</th>
             <th>Monto</th>
         </tr>
         </thead>

@@ -83,8 +83,10 @@ public class GroupController {
                     expenseForm.getDescription(),
                     participantIds
             );
-        } catch (DomainException | IllegalArgumentException exception) {
+        } catch (DomainException exception) {
             redirectAttributes.addFlashAttribute("error", exception.getMessage());
+        } catch (IllegalArgumentException exception) {
+            redirectAttributes.addFlashAttribute("error", "Los datos del gasto no son válidos");
         }
         return "redirect:/groups/" + id;
     }

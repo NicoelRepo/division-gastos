@@ -14,7 +14,7 @@
             <h1 th:text="${group.name}">Grupo</h1>
             <p th:text="${#lists.size(group.members)} + ' miembros'">0 miembros</p>
         </div>
-        <a class="button secondary" th:href="@{/groups/{id}/settlement(id=${group.id.value})}">Ver settlement</a>
+        <a class="button secondary" th:href="@{/groups/{id}/settlement(id=${group.id.value})}">Ver liquidación</a>
     </section>
 
     <p class="alert" th:if="${error}" th:text="${error}"></p>
@@ -24,7 +24,7 @@
             <h2>Miembros</h2>
             <form class="inline-form" method="post" th:action="@{/groups/{id}/members(id=${group.id.value})}">
                 <input name="name" placeholder="Nombre" required>
-                <button type="submit">Agregar</button>
+                <button type="submit">Agregar miembro</button>
             </form>
             <ul class="compact-list">
                 <li th:each="member : ${group.members}" th:text="${member.name}">Miembro</li>
@@ -35,7 +35,7 @@
             <h2>Nuevo gasto</h2>
             <form class="stack-form" method="post" th:action="@{/groups/{id}/expenses(id=${group.id.value})}" th:object="${expenseForm}">
                 <label>
-                    Descripcion
+                    Descripción
                     <input th:field="*{description}" placeholder="Cena, taxi, supermercado" required>
                 </label>
                 <label>
@@ -56,19 +56,19 @@
                         <span th:text="${member.name}">Miembro</span>
                     </label>
                 </fieldset>
-                <button type="submit" th:disabled="${#lists.isEmpty(group.members)}">Cargar gasto</button>
+                <button type="submit" th:disabled="${#lists.isEmpty(group.members)}">Guardar gasto</button>
             </form>
         </div>
     </section>
 
     <section>
         <h2>Gastos</h2>
-        <p class="empty-state" th:if="${#lists.isEmpty(expenses)}">Todavia no hay gastos cargados.</p>
+        <p class="empty-state" th:if="${#lists.isEmpty(expenses)}">Todavía no hay gastos cargados.</p>
         <table th:if="${!#lists.isEmpty(expenses)}">
             <thead>
             <tr>
                 <th>Fecha</th>
-                <th>Descripcion</th>
+                <th>Descripción</th>
                 <th>Pagador</th>
                 <th>Participantes</th>
                 <th>Monto</th>

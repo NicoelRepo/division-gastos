@@ -53,7 +53,7 @@ public class ExpenseService {
             throw new DomainException("El monto debe ser positivo");
         }
         if (description == null || description.isBlank()) {
-            throw new DomainException("La descripcion es obligatoria");
+            throw new DomainException("La descripción es obligatoria");
         }
         if (payerId == null || !group.hasMember(payerId)) {
             throw new DomainException("El pagador debe pertenecer al grupo");
