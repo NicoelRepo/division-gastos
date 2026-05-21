@@ -61,7 +61,9 @@ Abrir:
 http://localhost:9000/
 ```
 
-Crear un token en SonarQube y setearlo en la variable de entorno `SONAR_TOKEN`.
+SonarQube se ejecuta localmente en Docker. No se usa SonarCloud ni otro servicio externo para analizar el proyecto.
+
+Para publicar el analisis desde Gradle, SonarQube pide autenticacion. Por eso hay que crear un token dentro de la instancia local abierta en `http://localhost:9000/` y setearlo en la variable de entorno `SONAR_TOKEN`.
 
 En PowerShell:
 
