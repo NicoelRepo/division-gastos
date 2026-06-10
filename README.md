@@ -71,6 +71,22 @@ SonarCloud analiza `src/main/java` y `src/main/resources` para incluir las plant
 
 La cobertura local de JaCoCo y la cobertura mostrada por SonarCloud pueden no tener el mismo porcentaje porque no representan exactamente la misma metrica. La verificacion local actual de Gradle usa cobertura de instrucciones de JaCoCo con minimo 80%, mientras que SonarCloud muestra una cobertura combinada de lineas y condiciones. Para el flujo de CI, SonarCloud queda como gate final de calidad en nube.
 
+## Despliegue continuo
+
+El proyecto incluye configuracion para desplegar en Render mediante Blueprint:
+
+- `Dockerfile`: construye el JAR de Spring Boot y lo ejecuta en una imagen Java 17.
+- `render.yaml`: define un Web Service Docker en plan free.
+- `server.port=${PORT:8080}`: permite que Render asigne el puerto HTTP con la variable `PORT`.
+
+Render queda configurado para desplegar desde `master` solo cuando los checks del repositorio pasan:
+
+```yaml
+autoDeployTrigger: checksPass
+```
+
+Esto mantiene el flujo esperado: primero GitHub Actions valida build, tests, cobertura, Checkstyle y SonarCloud; despues Render despliega automaticamente el commit aprobado.
+
 ## SonarQube local
 
 Levantar SonarQube Community Edition:
