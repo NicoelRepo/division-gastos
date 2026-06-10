@@ -67,12 +67,18 @@ checkstyle {
 	isIgnoreFailures = false
 }
 
+fun envOrDefault(name: String, defaultValue: String): String =
+	System.getenv(name)?.takeIf { it.isNotBlank() } ?: defaultValue
+
 sonar {
 	properties {
-		property("sonar.projectKey", "division-gastos")
+		val sonarOrganization = System.getenv("SONAR_ORGANIZATION")?.takeIf { it.isNotBlank() }
+
+		property("sonar.projectKey", envOrDefault("SONAR_PROJECT_KEY", "division-gastos"))
 		property("sonar.projectName", "division-gastos")
-		property("sonar.host.url", "http://localhost:9000")
-		property("sonar.token", System.getenv("SONAR_TOKEN") ?: "")
+		property("sonar.host.url", envOrDefault("SONAR_HOST_URL", "http://localhost:9000"))
+		sonarOrganization?.let { property("sonar.organization", it) }
+		System.getenv("SONAR_TOKEN")?.takeIf { it.isNotBlank() }?.let { property("sonar.token", it) }
 		property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
 		property("sonar.java.checkstyle.reportPaths", "build/reports/checkstyle/main.xml")
 	}

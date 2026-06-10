@@ -47,6 +47,26 @@ El reporte HTML de cobertura queda en:
 build/reports/jacoco/test/html/index.html
 ```
 
+## Integracion continua
+
+El repositorio incluye un workflow de GitHub Actions en `.github/workflows/ci.yml`.
+
+En cada `push` a `master` o `main`, y en cada pull request, GitHub ejecuta:
+
+- Compilacion.
+- Tests con JUnit 5.
+- Reporte y verificacion de cobertura con JaCoCo.
+- Checkstyle.
+- Publicacion de reportes como artifact del workflow.
+
+El job de SonarCloud corre despues de los controles anteriores usando el mismo task Gradle `sonar` que se usa localmente. Para habilitarlo en GitHub hay que configurar:
+
+- Repository variable `SONAR_ORGANIZATION`.
+- Repository variable `SONAR_PROJECT_KEY`.
+- Repository secret `SONAR_TOKEN`.
+
+El host de SonarCloud se define en el workflow con `SONAR_HOST_URL=https://sonarcloud.io`.
+
 ## SonarQube local
 
 Levantar SonarQube Community Edition:
@@ -64,6 +84,13 @@ http://localhost:9000/
 SonarQube se ejecuta localmente en Docker. No se usa SonarCloud ni otro servicio externo para analizar el proyecto.
 
 Para publicar el analisis desde Gradle, SonarQube pide autenticacion. Por eso hay que crear un token dentro de la instancia local abierta en `http://localhost:9000/` y setearlo en la variable de entorno `SONAR_TOKEN`.
+
+Por defecto, el task `sonar` apunta al host local `http://localhost:9000` y usa `division-gastos` como project key. Esos valores se pueden pisar con variables de entorno:
+
+- `SONAR_HOST_URL`
+- `SONAR_ORGANIZATION`
+- `SONAR_PROJECT_KEY`
+- `SONAR_TOKEN`
 
 En PowerShell:
 
