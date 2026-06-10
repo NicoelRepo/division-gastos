@@ -65,7 +65,11 @@ El job de SonarCloud corre despues de los controles anteriores usando el mismo t
 - Repository variable `SONAR_PROJECT_KEY`.
 - Repository secret `SONAR_TOKEN`.
 
-El host de SonarCloud se define en el workflow con `SONAR_HOST_URL=https://sonarcloud.io`.
+El host de SonarCloud se define en el workflow con `SONAR_HOST_URL=https://sonarcloud.io`. El workflow espera el resultado del Quality Gate de SonarCloud con `sonar.qualitygate.wait=true`; si el Quality Gate falla, el job de SonarCloud tambien falla.
+
+SonarCloud analiza `src/main/java` y `src/main/resources` para incluir las plantillas Thymeleaf en el analisis de seguridad. Los tests se declaran en `src/test/java`.
+
+La cobertura local de JaCoCo y la cobertura mostrada por SonarCloud pueden no tener el mismo porcentaje porque no representan exactamente la misma metrica. La verificacion local actual de Gradle usa cobertura de instrucciones de JaCoCo con minimo 80%, mientras que SonarCloud muestra una cobertura combinada de lineas y condiciones. Para el flujo de CI, SonarCloud queda como gate final de calidad en nube.
 
 ## SonarQube local
 

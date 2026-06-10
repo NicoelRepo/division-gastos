@@ -79,6 +79,8 @@ sonar {
 		property("sonar.host.url", envOrDefault("SONAR_HOST_URL", "http://localhost:9000"))
 		sonarOrganization?.let { property("sonar.organization", it) }
 		System.getenv("SONAR_TOKEN")?.takeIf { it.isNotBlank() }?.let { property("sonar.token", it) }
+		property("sonar.sources", "src/main/java,src/main/resources")
+		property("sonar.tests", "src/test/java")
 		property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
 		property("sonar.java.checkstyle.reportPaths", "build/reports/checkstyle/main.xml")
 	}
