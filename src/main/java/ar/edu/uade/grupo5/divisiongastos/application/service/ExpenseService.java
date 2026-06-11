@@ -19,6 +19,10 @@ public class ExpenseService {
     private final ExpenseRepository expenseRepository;
     private final GroupService groupService;
 
+    static void main() {
+        System.out.printf("Hola");
+    }
+    
     public ExpenseService(ExpenseRepository expenseRepository, GroupService groupService) {
         this.expenseRepository = expenseRepository;
         this.groupService = groupService;
